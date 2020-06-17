@@ -1,0 +1,21 @@
+-- Copyright (c) 2020 Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
+-- SPDX-License-Identifier: Apache-2.0
+
+
+module Test where
+
+import Daml.Script
+
+import DA.Optional.Total
+
+import Main
+
+-- parties: this script _assumes_ to run on an open-world ledger (parties just
+-- _exist_, i.e. they are allocated implicitly on their first appearance)
+
+oops : Script ()
+oops = do
+  handler <- fromSome $ partyFromText "handler"
+  submit handler do createAndExerciseCmd (VolatileMaterial handler 6) ShakeTooMuch
+  query @VolatileMaterial handler
+  pure ()

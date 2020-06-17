@@ -1,0 +1,12 @@
+sdk-version: 1.2.0
+name: test-6241
+source: daml
+parties:
+  - owner
+version: 0.0.1
+dependencies:
+  - daml-prim
+  - daml-stdlib
+  - daml-script
+sandbox-options:
+  - --wall-clock-time

@@ -1,0 +1,18 @@
+-- Copyright (c) 2020 Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
+-- SPDX-License-Identifier: Apache-2.0
+
+module Main where
+
+import DA.Action
+
+template VolatileMaterial
+  with
+    handler: Party
+    volatility: Int
+  where
+    signatory handler
+    ensure volatility >= 0
+
+    choice ShakeTooMuch: ()
+      controller handler
+        do replicateA_ volatility $ createAndExercise (VolatileMaterial handler (volatility - 1)) ShakeTooMuch
